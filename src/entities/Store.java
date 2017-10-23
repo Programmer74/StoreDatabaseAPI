@@ -1,15 +1,15 @@
 package entities;
 
-import org.hibernate.annotations.Columns;
+//import org.hibernate.annotations.Columns;
 import usertypes.Address;
 
 import javax.persistence.*;
 
-import usertypes.AddressUserType;
+//import usertypes.AddressUserType;
 
 @Entity(name = "Store")
 @Table(name="STORE")
-public class Store {
+public class Store implements java.io.Serializable {
     @Id @Column(name="store_id")
     private Integer storeId;
 

@@ -13,8 +13,12 @@
         <property name="show_sql">true</property>
         <property name="hibernate.cache.use_second_level_cache">false</property>
         <property name="connection.pool_size">1</property>
-        <!--mapping class="entities.StateHoliday"></mapping-->
+        <mapping class="entities.StateHoliday"></mapping>
         <mapping class="entities.Store"></mapping>
+        <mapping class="entities.People"></mapping>
+        <mapping class="entities.Clients"></mapping>
+        <mapping class="entities.Staff"></mapping>
+        <mapping class="entities.Picture"></mapping>
         <!--mapping resource="entities/stateholidays.hbm.xml"></mapping-->
     </session-factory>
 </hibernate-configuration>

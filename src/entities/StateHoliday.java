@@ -7,7 +7,7 @@ import static javax.persistence.TemporalType.DATE;
 
 @Entity
 @Table(name = "state_holidays")
-public class StateHoliday {
+public class StateHoliday implements java.io.Serializable{
 
     @Id
     @Column(name = "holiday_id", unique = true, nullable = false)

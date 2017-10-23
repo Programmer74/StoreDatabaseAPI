@@ -7,7 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public class StoreDatabaseAPI {
+
+
+
     public static void main(String[] args){
+
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx;
@@ -15,7 +19,13 @@ public class StoreDatabaseAPI {
             tx = session.beginTransaction();
             Options options = new Options(session);
             //options.printHolidays(); // this works - great!
-            options.printAllStores();
+            //options.printAllStores(); // this works too - great!
+            //System.out.println("*******************************");
+            //options.printAllPeople();
+            //options.printAllClients();
+            //options.printAllTable("entities.Picture");// this IS WORKING
+
+            options.doNativeSQL(null);
 
             //options.getBestClients();
 
