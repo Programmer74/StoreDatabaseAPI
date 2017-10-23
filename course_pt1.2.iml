@@ -16,7 +16,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Hibernate 5.2.11-5.2.11" level="project" />
-    <orderEntry type="library" name="ojdbc6" level="project" />
     <orderEntry type="library" name="commons-logging:commons-logging:1.0" level="project" />
+    <orderEntry type="library" name="hibernate-3.0.5" level="project" />
+    <orderEntry type="library" name="javax.transaction:jta:1.1" level="project" />
+    <orderEntry type="library" name="javassist:javassist:3.12.1.GA" level="project" />
+    <orderEntry type="library" name="Simple Logging Facade for Java:1.6.0" level="project" />
+    <orderEntry type="library" name="ojdbc8" level="project" />
   </component>
 </module>

@@ -3,6 +3,8 @@ package entities;
 import javax.persistence.*;
 import java.sql.Date;
 
+import static javax.persistence.TemporalType.DATE;
+
 @Entity
 @Table(name = "state_holidays")
 public class StateHoliday {
@@ -17,7 +19,7 @@ public class StateHoliday {
         this.holiday_id = holiday_id;
     }
 
-    //@Temporal(TemporalType.DATE)
+    //@Temporal(DATE)
     @Column(name = "holiday_date", nullable = false, unique = true)
     public Date getHoliday_date() {
         return holiday_date;

@@ -1,4 +1,5 @@
 import entities.StateHoliday;
+import entities.Store;
 import org.hibernate.Session;
 
 import java.util.Iterator;
@@ -10,6 +11,8 @@ public class Options {
     public Options(Session session) { this.session = session; }
 
     public Options() { }
+
+    
 
     public void printHolidays(){
         List holidays = session.createQuery("FROM StateHoliday").list();
@@ -30,5 +33,13 @@ public class Options {
 
         //testing
         Object sayHello = session.createQuery("SELECT say_greeting('Helena') from DUAL");
+    }
+
+    public void printAllStores(){
+        List stores = session.createQuery("SELECT e FROM Store e").list();
+        for (Iterator iterator = stores.iterator(); iterator.hasNext(); ) {
+            Store store = (Store) iterator.next();
+            System.out.println(store.getStoreId() + "\t" + store.getAddress());
+        }
     }
 }

@@ -14,7 +14,8 @@ public class StoreDatabaseAPI {
         try {
             tx = session.beginTransaction();
             Options options = new Options(session);
-            options.printHolidays();
+            //options.printHolidays(); // this works - great!
+            options.printAllStores();
 
             //options.getBestClients();
 
@@ -26,5 +27,8 @@ public class StoreDatabaseAPI {
         } finally {
             session.close();
         }
+
+        //JDBCExample example = new JDBCExample();
+        //example.init();
     }
 }

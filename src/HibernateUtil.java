@@ -9,13 +9,15 @@ public class HibernateUtil {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
             return new Configuration().configure().buildSessionFactory();
+            //Configuration cfg = new Configuration();
+            //return cfg.configure("./hibernate.cfg.xml").buildSessionFactory();
         }
 
         catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            //throw new ExceptionInInitializerError(ex);
-            return null;
+            System.err.println("!!! Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+            //return null;
         }
     }
 
