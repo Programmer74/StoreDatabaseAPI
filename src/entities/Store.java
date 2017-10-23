@@ -3,10 +3,7 @@ package entities;
 import org.hibernate.annotations.Columns;
 import usertypes.Address;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import usertypes.AddressUserType;
 
@@ -24,24 +21,26 @@ public class Store {
         this.storeId = storeId;
     }
 
-    public AddressUserType getAddress() {
+    public Address/*UserType*/ getAddress() {
         return address;
     }
 
-    public void setAddress(AddressUserType address) {
+    public void setAddress(Address/*UserType*/ address) {
         this.address = address;
     }
 
-    @org.hibernate.annotations.Type(type = "usertypes.AddressUserType")
+    //@org.hibernate.annotations.Type(type = "usertypes.AddressUserType")
     //@Column(name = "store_address")
-    @Columns(columns = { @Column(name = "appartement"),
+    /*@Columns(columns = { @Column(name = "appartement"),
         @Column(name="building"), @Column(name="street"), @Column(name = "city"),
-        @Column(name="ZipCode")})
-    private AddressUserType address;
+        @Column(name="ZipCode")}) */
+    @Column(name="store_address", columnDefinition="ADDRESS")
+    @org.hibernate.annotations.Type(type = "usertypes.AddressUserType")
+    private Address/*UserType*/ address;
 
     public Store() { }
 
-    public Store(Integer id, AddressUserType address){
+    public Store(Integer id, Address/*UserType*/ address){
         this.storeId = id;
         this.address = address;
     }

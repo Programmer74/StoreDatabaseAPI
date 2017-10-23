@@ -12,7 +12,7 @@ public class Options {
 
     public Options() { }
 
-    
+
 
     public void printHolidays(){
         List holidays = session.createQuery("FROM StateHoliday").list();

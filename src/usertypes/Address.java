@@ -1,17 +1,19 @@
 package usertypes;
 
 
+import java.math.BigDecimal;
+
 public class Address implements java.io.Serializable{
-    private Integer appartement;
-    private Integer building;
+    private Integer apartement;
+    private /*Integer*/ BigDecimal building;
     private String street;
     private String city;
     private String ZipCode;
 
     public Address() { }
 
-    public Address(Integer appartement, Integer building, String street, String city, String ZipCode){
-        this.appartement = appartement;
+    public Address(Integer appartement, /*Integer */ BigDecimal building, String street, String city, String ZipCode){
+        this.apartement = appartement;
         this.building = building;
         this.street = street;
         this.city = city;
@@ -20,18 +22,18 @@ public class Address implements java.io.Serializable{
 
 
     public Integer getAppartement() {
-        return appartement;
+        return apartement;
     }
 
     public void setAppartement(Integer appartement) {
-        this.appartement = appartement;
+        this.apartement = appartement;
     }
 
-    public Integer getBuilding() {
+    public /*Integer*/ BigDecimal getBuilding() {
         return building;
     }
 
-    public void setBuilding(Integer building) {
+    public void setBuilding(/*Integer*/ BigDecimal building) {
         this.building = building;
     }
 
@@ -67,7 +69,7 @@ public class Address implements java.io.Serializable{
 
         Address address = (Address) o;
 
-        if (appartement != null ? !appartement.equals(address.appartement) : address.appartement != null) return false;
+        if (apartement != null ? !apartement.equals(address.apartement) : address.apartement != null) return false;
         if (building != null ? !building.equals(address.building) : address.building != null) return false;
         if (street != null ? !street.equals(address.street) : address.street != null) return false;
         if (city != null ? !city.equals(address.city) : address.city != null) return false;
@@ -76,11 +78,16 @@ public class Address implements java.io.Serializable{
 
     @Override
     public int hashCode() {
-        int result = appartement != null ? appartement.hashCode() : 0;
+        int result = apartement != null ? apartement.hashCode() : 0;
         result = 31 * result + (building != null ? building.hashCode() : 0);
         result = 31 * result + (street != null ? street.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (ZipCode != null ? ZipCode.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString(){
+        return ("{" + apartement + " " + building + " " + street + ", " + city + "}");
     }
 }

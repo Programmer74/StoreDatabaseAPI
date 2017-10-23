@@ -1,29 +1,36 @@
 package usertypes;
 
+import oracle.sql.STRUCT;
+import oracle.sql.StructDescriptor;
 import org.hibernate.HibernateException;
-import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.sql.*;
 
 public class AddressUserType implements UserType{
+
+    private final static int SQL_TYPE = Types.STRUCT;
+    private final static String DB_OBJEXT_TYPE = "ADDRESS";
+
+
     @Override
     public int[] sqlTypes() {
-        return new int[] {StandardBasicTypes.INTEGER.sqlType(), StandardBasicTypes.INTEGER.sqlType(),
+        /*return new int[] {StandardBasicTypes.INTEGER.sqlType(), StandardBasicTypes.INTEGER.sqlType(),
                 StandardBasicTypes.STRING.sqlType(), StandardBasicTypes.STRING.sqlType(),
-                StandardBasicTypes.STRING.sqlType()};
+                StandardBasicTypes.STRING.sqlType()}; */
+        return new int[] { SQL_TYPE };
+
     }
 
     @Override
-    public Class<Address> returnedClass(){
+    public Class/*<Address>*/ returnedClass(){
         return Address.class;
     }
 
     @Override
-    public boolean equals(Object x, Object y) throws HibernateException{
+    public boolean equals(Object x, Object y) throws HibernateException {
         if (null == x || null == y) return false;
         return x.equals(y);
     }
@@ -37,7 +44,7 @@ public class AddressUserType implements UserType{
     public Object nullSafeGet(ResultSet rs, String[] names, org.hibernate.engine.spi.SharedSessionContractImplementor session,
                               Object owner)
             throws HibernateException, SQLException {
-        Address address = new Address();
+        /*Address address = new Address();
         Integer appartement = rs.getInt(names[0]);
         if (appartement != null) address.setAppartement(new Integer(appartement));
 
@@ -53,6 +60,16 @@ public class AddressUserType implements UserType{
         String zipcode = rs.getString(names[4]);
         if (zipcode != null) address.setZipCode(new String(zipcode));
 
+        return address; */
+        final Struct struct = (Struct) rs.getObject(names[0]);
+        if (rs.wasNull()) return null;
+
+        final Address address = new Address();
+        address.setAppartement((Integer) struct.getAttributes()[0]);
+        address.setBuilding((/*Integer*/BigDecimal) struct.getAttributes()[1]);
+        address.setStreet((String) struct.getAttributes()[2]);
+        address.setCity((String) struct.getAttributes()[3]);
+        address.setZipCode((String) struct.getAttributes()[4]);
         return address;
     }
 
@@ -61,7 +78,7 @@ public class AddressUserType implements UserType{
     @Override
     public void nullSafeSet(PreparedStatement st, Object value, int index, org.hibernate.engine.spi.SharedSessionContractImplementor session)
     throws HibernateException, SQLException {
-        Address address = (Address) value;
+        /*Address address = (Address) value;
 
         if (null != address.getAppartement()) {
             Integer appartement = new Integer(address.getAppartement());
@@ -103,14 +120,36 @@ public class AddressUserType implements UserType{
         }
         else {
             st.setNull(index + 4, StandardBasicTypes.STRING.sqlType());
+        } */
+
+        if (value == null) st.setNull(index, SQL_TYPE, DB_OBJEXT_TYPE);
+        else {
+            final Address address = (Address) value;
+            final Object[] values = new Object[] {address.getAppartement(),
+                address.getBuilding(), address.getStreet(), address.getCity(),
+                address.getZipCode()};
+            final Connection connection = st.getConnection();
+            final STRUCT struct = new STRUCT(StructDescriptor.createDescriptor(DB_OBJEXT_TYPE, connection),
+                    connection, values);
+            st.setObject(index, struct, SQL_TYPE);
+
         }
     }
 
     @Override
     public Object deepCopy(Object value) throws HibernateException {
-        Address address = (Address) value;
+        /* Address address = (Address) value;
         Address copy = new Address(address.getAppartement(), address.getBuilding(), address.getStreet(),
                 address.getCity(), address.getZipCode());
+        return copy; */
+        if (value == null) return null;
+        final Address address = (Address) value;
+        final Address copy = new Address();
+        copy.setAppartement(address.getAppartement());
+        copy.setBuilding(address.getBuilding());
+        copy.setStreet(address.getStreet());
+        copy.setCity(address.getCity());
+        copy.setZipCode(address.getZipCode());
         return copy;
     }
 
@@ -128,7 +167,8 @@ public class AddressUserType implements UserType{
     @Override
     public Object assemble(Serializable cached, Object owner)
             throws HibernateException {
-        return this.deepCopy(cached);
+        //return this.deepCopy(cached);
+        return null;
     }
 
     @Override
