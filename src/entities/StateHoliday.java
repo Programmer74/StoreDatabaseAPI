@@ -1,25 +1,26 @@
 package entities;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
-import static javax.persistence.TemporalType.DATE;
 
 @Entity
 @Table(name = "state_holidays")
 public class StateHoliday implements java.io.Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "holiday_gen")
+    @SequenceGenerator(name = "holiday_gen", sequenceName = "holidays_seq")
     @Column(name = "holiday_id", unique = true, nullable = false)
-    public int getHoliday_id() {
+    public Integer getHoliday_id() {
         return holiday_id;
     }
 
-    public void setHoliday_id(int holiday_id) {
+    public void setHoliday_id(Integer holiday_id) {
         this.holiday_id = holiday_id;
     }
 
-    //@Temporal(DATE)
+    @Temporal(TemporalType.DATE)
     @Column(name = "holiday_date", nullable = false, unique = true)
     public Date getHoliday_date() {
         return holiday_date;
@@ -38,7 +39,7 @@ public class StateHoliday implements java.io.Serializable{
         this.holiday_name = holiday_name;
     }
 
-    private int holiday_id;
+    private Integer holiday_id;
     private Date holiday_date;
     private String holiday_name;
 

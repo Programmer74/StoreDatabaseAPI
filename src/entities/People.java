@@ -7,6 +7,14 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/*@org.hibernate.annotations.NamedNativeQueries({
+        @org.hibernate.annotations.NamedNativeQuery(
+                name = "insertIntoClients",
+                query = "CALL insert_into_clients(:pname, :last_name," +
+                        ":middle_name, :mail, :s, :date_birth, :date_regIN," +
+                        ":passwd, :id_num, :paddr, :ph"
+        )
+}) */ // didn't work
 @Entity
 @Table(name = "PEOPLE_TAB")
 public class People {
@@ -46,12 +54,12 @@ public class People {
     private String password;
 
     @Column(name = "id_number", unique = true)
-    private int idNumber;
+    private BigDecimal idNumber;
 
     public People() { }
 
     public People(int peopleId, Address address, BigDecimal phone, Date dateOfBirth,
-                  Date dateRegistered, String password, int idNumber,
+                  Date dateRegistered, String password, BigDecimal idNumber,
                   Pname peopleName){
         this.peopleId = peopleId;
         this.address = address;
@@ -135,11 +143,11 @@ public class People {
         this.password = password;
     }
 
-    public int getIdNumber() {
+    public BigDecimal getIdNumber() {
         return idNumber;
     }
 
-    public void setIdNumber(int idNumber) {
+    public void setIdNumber(BigDecimal idNumber) {
         this.idNumber = idNumber;
     }
 
@@ -180,7 +188,7 @@ public class People {
         result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
         result = 31 * result + (dateRegistered != null ? dateRegistered.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + idNumber;
+        //result = 31 * result + idNumber;
         return result;
     }
 }

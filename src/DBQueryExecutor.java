@@ -3,6 +3,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class DBQueryExecutor {
             //System.out.println("*******************************");
             //options.printAllPeople();
             //options.printAllClients();
-            options.addPeople();
+            //options.addPeople();
             //options.printAllTable("entities.People");// this IS WORKING
 
             //options.doNativeSQL(null);
@@ -30,6 +31,11 @@ public class DBQueryExecutor {
 
             //Query query = session.createQuery("from TABLE(clients_operations.get_best_buyer(9)) ORDER BY SUM DESC");
 
+            /*options.insertIntoClients("Mary", "Jenkins", "Elizabeth",
+                    "maryjen@gmail.com", "f", "12-12-1990",
+                    "10-09-2017", "maryjen123", new BigDecimal(132435),
+                    0, new BigDecimal(0), null, null, new BigDecimal(4676767)); */
+            options.addHoliday();
             tx.commit();
         } catch (Exception ex){
             ex.printStackTrace();

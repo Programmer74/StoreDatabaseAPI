@@ -4,6 +4,10 @@ import entities.StateHoliday;
 import entities.Store;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.annotations.NamedNativeQueries;
+import org.hibernate.annotations.NamedNativeQuery;
+import org.hibernate.annotations.NamedQuery;
+import org.hibernate.query.Query;
 import usertypes.Address;
 import usertypes.Pname;
 
@@ -11,6 +15,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.IllegalFormatException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -76,13 +81,60 @@ public class Options {
             ex.printStackTrace();
         }
         p.setDateOfBirth(date);
-        p.setIdNumber(133348);
+        p.setIdNumber(new BigDecimal(133348));
         p.setPassword("Somestupidpassword");
         p.setPhone(new BigDecimal(4652656));
 
         session.save(p);
         //session.flush();
         //session.getTransaction().commit();
+    }
+
+
+
+
+    // TODO: fix this
+    public void insertIntoClients(String pname, String lastName, String middleName,
+                                  String mail, String s, String dateBirth, String dateRegistered,
+                                  String password, BigDecimal idNumber, Integer apt,
+                                  BigDecimal building, String street, String city, BigDecimal phone){
+
+        // creating address for new client
+        Address address = new Address();
+        address.setAppartement(apt);
+        address.setBuilding(building);
+        address.setStreet(street);
+        address.setCity(city);
+
+        Query query = session.createQuery("?= CALL insert_into_clients(:pname, :last_name," +
+                ":middle_name, :mail, :s, :date_birth, :date_regIN," +
+                ":passwd, :id_num, :paddr, :ph)")
+                .setParameter("pname", pname)
+                .setParameter("last_name", lastName)
+                .setParameter("middle_name", middleName)
+                .setParameter("mail", mail)
+                .setParameter("s", s)
+                .setParameter("date_birth", dateBirth)
+                .setParameter("date_regIN", dateRegistered)
+                .setParameter("passwd", password)
+                .setParameter("id_num", idNumber)
+                .setParameter("paddr", address)
+                .setParameter("ph", phone);
+        query.executeUpdate();
+
+    }
+
+    // this works!
+    public void addHoliday(String inpDate){
+        StateHoliday holiday = new StateHoliday();
+        java.util.Date date;
+        try {
+            date = fmt.parse(inpDate);
+        } catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+        holiday.setHoliday_date(date);
+        session.save(holiday);
     }
 
 }
