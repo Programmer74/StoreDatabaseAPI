@@ -48,4 +48,9 @@ public class Picture implements java.io.Serializable{
     public void setPicComment(Clob picComment) {
         this.picComment = picComment;
     }
+
+    @Override
+    public String toString(){
+        return (picId + " " + picture + " " + picComment);
+    }
 }

@@ -5,17 +5,17 @@ import usertypes.Pname;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "PEOPLE_TAB")
 public class People {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_seq")
+    //@SequenceGenerator(name="people_seq", sequenceName = "people_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // works
     @Column(name="people_id")
-    /*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="client_id", unique = true)*/
-    private int peopleId;
+    private Integer peopleId;
 
     @Column(name="people_name", columnDefinition="PNAME_T")
     @org.hibernate.annotations.Type(type = "usertypes.PnameUserType")
@@ -34,9 +34,11 @@ public class People {
     @Column(name = "phone")
     private BigDecimal phone;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_of_registered")
     private Date dateRegistered;
 
@@ -61,13 +63,13 @@ public class People {
         this.idNumber = idNumber;
     }
 
-    public int getPeopleId() {
+    public Integer getPeopleId() {
         return peopleId;
     }
 
-    public void setPeopleId(int peopleId) {
+    /* public void setPeopleId(int peopleId) {
         this.peopleId = peopleId;
-    }
+    } */
 
     public Pname getPeopleName() {
         return peopleName;
@@ -145,5 +147,40 @@ public class People {
     public String toString() {
         return (peopleId + ". " + peopleName.toString() + " " +
             email + " " + dateOfBirth.toString());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof People)) return false;
+
+        People people = (People) o;
+
+        if (peopleId != people.peopleId) return false;
+        if (idNumber != people.idNumber) return false;
+        if (peopleName != null ? !peopleName.equals(people.peopleName) : people.peopleName != null) return false;
+        if (email != null ? !email.equals(people.email) : people.email != null) return false;
+        if (sex != null ? !sex.equals(people.sex) : people.sex != null) return false;
+        if (address != null ? !address.equals(people.address) : people.address != null) return false;
+        if (phone != null ? !phone.equals(people.phone) : people.phone != null) return false;
+        if (dateOfBirth != null ? !dateOfBirth.equals(people.dateOfBirth) : people.dateOfBirth != null) return false;
+        if (dateRegistered != null ? !dateRegistered.equals(people.dateRegistered) : people.dateRegistered != null)
+            return false;
+        return password != null ? password.equals(people.password) : people.password == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = peopleId;
+        result = 31 * result + (peopleName != null ? peopleName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (sex != null ? sex.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        result = 31 * result + (dateRegistered != null ? dateRegistered.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + idNumber;
+        return result;
     }
 }

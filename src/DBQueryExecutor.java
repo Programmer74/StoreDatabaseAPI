@@ -6,9 +6,7 @@ import org.hibernate.query.Query;
 import java.util.Iterator;
 import java.util.List;
 
-public class StoreDatabaseAPI {
-
-
+public class DBQueryExecutor {
 
     public static void main(String[] args){
 
@@ -23,9 +21,10 @@ public class StoreDatabaseAPI {
             //System.out.println("*******************************");
             //options.printAllPeople();
             //options.printAllClients();
-            //options.printAllTable("entities.Picture");// this IS WORKING
+            options.addPeople();
+            //options.printAllTable("entities.People");// this IS WORKING
 
-            options.doNativeSQL(null);
+            //options.doNativeSQL(null);
 
             //options.getBestClients();
 

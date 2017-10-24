@@ -54,4 +54,24 @@ public class Staff implements java.io.Serializable{
     public String toString(){
         return (staff.toString() + " " + store.getStoreId());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Staff)) return false;
+
+        Staff staff1 = (Staff) o;
+
+        if (staff != null ? !staff.equals(staff1.staff) : staff1.staff != null) return false;
+        if (store != null ? !store.equals(staff1.store) : staff1.store != null) return false;
+        return pic != null ? pic.equals(staff1.pic) : staff1.pic == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = staff != null ? staff.hashCode() : 0;
+        result = 31 * result + (store != null ? store.hashCode() : 0);
+        result = 31 * result + (pic != null ? pic.hashCode() : 0);
+        return result;
+    }
 }

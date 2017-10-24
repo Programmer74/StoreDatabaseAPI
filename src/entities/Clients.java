@@ -27,4 +27,19 @@ public class Clients implements java.io.Serializable{
     public String toString(){
         return (clientId.toString());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Clients)) return false;
+
+        Clients clients = (Clients) o;
+
+        return clientId.equals(clients.clientId);
+    }
+
+    @Override
+    public int hashCode() {
+        return clientId.hashCode();
+    }
 }
