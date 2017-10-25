@@ -20,10 +20,7 @@ public class DBQueryExecutor {
             //options.printHolidays(); // this works - great!
             //options.printAllStores(); // this works too - great!
             //System.out.println("*******************************");
-            //options.printAllPeople();
-            //options.printAllClients();
-            //options.addPeople();
-            //options.printAllTable("entities.People");// this IS WORKING
+            options.printAllTable("entities.People");// this IS WORKING
 
             //options.doNativeSQL(null);
 
@@ -37,7 +34,8 @@ public class DBQueryExecutor {
                     0, new BigDecimal(0), null, null, new BigDecimal(4676767)); */
             //options.addHoliday();
 
-            options.addCLient();
+            //options.addCLient(); // WORKING
+            //options.addStore(); // works
             tx.commit();
         } catch (Exception ex){
             ex.printStackTrace();

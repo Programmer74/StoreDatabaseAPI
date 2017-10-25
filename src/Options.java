@@ -1,6 +1,7 @@
 import entities.Client;
 import entities.People;
 //import entities.StateHoliday;
+import entities.Store;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class Options {
     private Session session;
@@ -37,7 +39,7 @@ public class Options {
             InstantiationException, IllegalAccessException {
         Object field;
 
-        List fields = session.createQuery("SELECT i FROM " +
+        List<Object> fields = session.createQuery("SELECT i FROM " +
                 className + " i").list();
         for (Iterator iterator = fields.iterator(); iterator.hasNext(); ) {
             field = iterator.next();
@@ -51,7 +53,6 @@ public class Options {
 
         //List<Object[]> rows = query.setParameter("month",9).list();
         List<Object[]> fields = query.setParameter("prod_name_","dress").list();
-
         /*for (Object[] row : rows){
             System.out.println(row[0] + " " + row[1] + " " + row[2]);
         } */
@@ -62,7 +63,7 @@ public class Options {
         }
     }
 
-    public void addPeople(){
+    /*public void addPeople(){
         //session.beginTransaction();
         People p = new People();
         p.setSex("f");
@@ -82,7 +83,7 @@ public class Options {
         session.save(p);
         //session.flush();
         //session.getTransaction().commit();
-    }
+    } */
 
 
 
@@ -178,6 +179,25 @@ public class Options {
 
 
         }
+    }
+
+    public void addStore() {
+        Address storeAddress = new UserDataReader().getStoreParams();
+        Query query = session.createQuery("from Store");
+        List<Store> list = query.list();
+
+        for (Store item : list) {
+            if ((item.getStoreAddress().getStreet().equalsIgnoreCase(storeAddress.getStreet()))
+                    && (item.getStoreAddress().getBuilding().equals(storeAddress.getBuilding()))
+                    && (item.getStoreAddress().getCity().equalsIgnoreCase(storeAddress.getCity()))) {
+                System.err.println(">> Sore already exists in DB");
+                return; // TODO: handle this
+            }
+        }
+
+        Store store = new Store();
+        store.setAddress(storeAddress);
+        session.save(store);
     }
 
 }

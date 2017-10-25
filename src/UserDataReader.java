@@ -1,4 +1,5 @@
 import entities.People;
+import entities.Store;
 import usertypes.Address;
 import usertypes.Pname;
 
@@ -11,24 +12,30 @@ import java.util.Scanner;
  * class that gets data needed from user
  */
 public class UserDataReader {
-
-    private final static String ASK_USER_FNAME = "* Enter person's FIRST NAME";
-    private final static String ASK_USER_LNAME = "* Enter person's LAST NAME";
-    private final static String ASK_USER_MNAME = "* Enter person's MIDDLE NAME";
-    private final static String ASK_USER_MAIL = "* Enter person's EMAIL";
-    private final static String ASK_USER_SEX = "* Enter person's SEX";
-    private final static String ASK_USER_DATEB = "* Enter person's DATE OF BIRTH (yyyy-MM-dd)";
-    private final static String ASK_USER_DATEREG = "* Enter person's DATE OF REGISTRATION (yyyy-MM-dd)";
-    private final static String ASK_USER_PASSWORD = "* Enter person's PASSWORD";
-    private final static String ASK_USER_IDNUM = "* Enter person's ID NUMBER";
-    private final static String ASK_USER_APPARTEMENT = "* Enter person's APARTMENT";
-    private final static String ASK_USER_BUILDING = "* Enter person's BUILDING";
-    private final static String ASK_USER_STREET = "* Enter person's STREET";
-    private final static String ASK_USER_CITY = "* Enter person's CITY";
-    private final static String ASK_USER_PHONE = "* Enter person's PHONE";
+    private Scanner sc;
 
     // TODO: add validation
+
+    /**
+     * gets person's info from the user input
+     * @return person
+     */
     public People getPeopleParams(){
+        final String ASK_USER_FNAME = "* Enter person's FIRST NAME";
+        final String ASK_USER_LNAME = "* Enter person's LAST NAME";
+        final String ASK_USER_MNAME = "* Enter person's MIDDLE NAME";
+        final String ASK_USER_MAIL = "* Enter person's EMAIL";
+        final String ASK_USER_SEX = "* Enter person's SEX";
+        final String ASK_USER_DATEB = "* Enter person's DATE OF BIRTH (yyyy-MM-dd)";
+        final String ASK_USER_DATEREG = "* Enter person's DATE OF REGISTRATION (yyyy-MM-dd)";
+        final String ASK_USER_PASSWORD = "* Enter person's PASSWORD";
+        final String ASK_USER_IDNUM = "* Enter person's ID NUMBER";
+        final String ASK_USER_APPARTEMENT = "* Enter person's APARTMENT";
+        final String ASK_USER_BUILDING = "* Enter person's BUILDING";
+        final String ASK_USER_STREET = "* Enter person's STREET";
+        final String ASK_USER_CITY = "* Enter person's CITY";
+        final String ASK_USER_PHONE = "* Enter person's PHONE";
+
         String pname;
         String lastName;
         String middleName;
@@ -48,8 +55,7 @@ public class UserDataReader {
         Date dateB = null;
         Date dateReg = null;
 
-        Scanner sc = new Scanner(System.in);
-
+        sc = new Scanner(System.in);
 
         System.out.println(ASK_USER_FNAME);
         pname = sc.nextLine();
@@ -61,9 +67,8 @@ public class UserDataReader {
         middleName = sc.nextLine();
 
         System.out.println(ASK_USER_IDNUM);
-        idNumber = new BigDecimal(sc.nextLine());//sc.nextBigDecimal();
+        idNumber = new BigDecimal(sc.nextLine());
 
-        // TODO: skipped this
         System.out.println(ASK_USER_DATEB);
         dateBirth = sc.nextLine();
 
@@ -125,5 +130,40 @@ public class UserDataReader {
 
 
         return p;
+    }
+
+
+    // TODO: validation
+    // works
+    /**
+     * gets store's parameters from user input
+     * @return created Store object
+     */
+    public Address getStoreParams(){
+        final String ASK_STORE_BUILDING = "* Enter store's BUILDING";
+        final String ASK_STORE_STREET = "* Enter store's STREET";
+        final String ASK_STORE_CITY = "* Enter store's CITY";
+
+        BigDecimal building = null;
+        String street = null;
+        String city = null;
+
+        sc = new Scanner(System.in);
+
+        System.out.println(ASK_STORE_BUILDING);
+        building = new BigDecimal(sc.nextLine());
+
+        System.out.println(ASK_STORE_STREET);
+        street = sc.nextLine();
+
+        System.out.println(ASK_STORE_CITY);
+        city = sc.nextLine();
+
+        Address address = new Address();
+        address.setBuilding(building);
+        address.setStreet(street);
+        address.setCity(city);
+
+        return address;
     }
 }
