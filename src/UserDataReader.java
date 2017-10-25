@@ -159,6 +159,9 @@ public class UserDataReader {
         System.out.println(ASK_STORE_CITY);
         city = sc.nextLine();
 
+        // TODO: handle this situation
+        if ((city == null) || (street == null) || (building == null))
+            throw new IllegalArgumentException("Can't be inserted into Store Database due to NULL value(s)");
         Address address = new Address();
         address.setBuilding(building);
         address.setStreet(street);

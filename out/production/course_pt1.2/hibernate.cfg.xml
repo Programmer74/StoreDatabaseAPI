@@ -21,6 +21,7 @@
         <mapping class="entities.People"></mapping>
         <mapping class="entities.Client"></mapping>
         <mapping class="entities.Store"></mapping>
+        <mapping class="entities.StateHoliday"></mapping>
         <!--mapping resource="entities/stateholidays.hbm.xml"></mapping-->
     </session-factory>
 </hibernate-configuration>

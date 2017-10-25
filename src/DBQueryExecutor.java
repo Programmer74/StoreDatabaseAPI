@@ -20,7 +20,7 @@ public class DBQueryExecutor {
             //options.printHolidays(); // this works - great!
             //options.printAllStores(); // this works too - great!
             //System.out.println("*******************************");
-            options.printAllTable("entities.People");// this IS WORKING
+            options.printAllTable("entities.StateHoliday");// this IS WORKING
 
             //options.doNativeSQL(null);
 
