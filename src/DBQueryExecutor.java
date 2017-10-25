@@ -1,4 +1,4 @@
-import entities.StateHoliday;
+//import entities.StateHoliday;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -36,12 +36,18 @@ public class DBQueryExecutor {
                     "10-09-2017", "maryjen123", new BigDecimal(132435),
                     0, new BigDecimal(0), null, null, new BigDecimal(4676767)); */
             //options.addHoliday();
+
+            options.addCLient("Mary", "Jenkins", "Elizabeth",
+                    "maryjen@gmail.com", "f", "12-12-1990",
+                    "10-09-2017", "maryjen123", new BigDecimal(132435),
+                    0, new BigDecimal(0), null, null, new BigDecimal(4676767));
             tx.commit();
         } catch (Exception ex){
             ex.printStackTrace();
         } finally {
             session.close();
         }
+        HibernateUtil.shutdown();
 
         //JDBCExample example = new JDBCExample();
         //example.init();

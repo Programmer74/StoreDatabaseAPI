@@ -1,5 +1,6 @@
+import entities.Client;
 import entities.People;
-import entities.StateHoliday;
+//import entities.StateHoliday;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -8,6 +9,7 @@ import usertypes.Pname;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -88,7 +90,7 @@ public class Options {
     // TODO: fix this
     public void insertIntoClients(String pname, String lastName, String middleName,
                                   String mail, String s, String dateBirth, String dateRegistered,
-                                  String password, BigDecimal idNumber, Integer apt,
+                                  String password, BigDecimal idNumber, BigDecimal apt,
                                   BigDecimal building, String street, String city, BigDecimal phone){
 
         // creating address for new client
@@ -117,7 +119,7 @@ public class Options {
     }
 
     // this works!
-    public void addHoliday(String inpDate){
+    /*public void addHoliday(String inpDate){
         StateHoliday holiday = new StateHoliday();
         java.util.Date date;
         try {
@@ -127,6 +129,74 @@ public class Options {
         }
         holiday.setHoliday_date(date);
         session.save(holiday);
+    }*/
+
+    public void addCLient(String pname, String lastName, String middleName,
+                          String mail, String s, String dateBirth, String dateRegistered,
+                          String password, BigDecimal idNumber, Integer apt,
+                          BigDecimal building, String street, String city, BigDecimal phone){
+
+        // check if exists in people
+        Query query = session.createQuery("from People where email = :mail");
+        query.setParameter("mail", mail);
+        List list = query.list();
+
+        // if not in People db ==> create one
+        if ((list.size() == 0) || (list == null)) {
+
+            // creating address for new client
+            Address address = new Address();
+            address.setAppartement(new BigDecimal(apt));
+            address.setBuilding(building);
+            address.setStreet(street);
+            address.setCity(city);
+
+            System.out.println(">> No such object in People DB");
+            Date dateB = null, dateReg = null;
+
+            try {
+                dateB = fmt.parse(dateBirth);
+                dateReg = fmt.parse(dateRegistered);
+            } catch (Exception ex) {
+                System.err.println("Couldn't convert to Date");
+            }
+
+            People p = new People();
+            p.setPeopleName(new Pname(pname, lastName, middleName));
+            p.setPhone(phone);
+            p.setEmail(mail);
+            p.setPassword(password);
+            p.setAddress(address);
+            p.setIdNumber(idNumber);
+            p.setDateOfBirth(dateB);
+            p.setDateRegistered(dateReg);
+
+            Client cl = new Client();
+            cl.setClientId(p);
+            session.save(cl);
+        }
+        // already in people DB ==> check in clients DB
+        else {
+            System.out.println(">> FOUND In people DB" + list.get(0));
+            People human = (People)list.get(0);
+
+            Query query1 = session.createQuery("from Client where clientId = :id");
+
+            List list2 = query1
+                    .setParameter("id", human).list();
+
+            // if already in Client
+            if ((list2.size() != 0) || (list2 != null)) {
+                System.out.println("already in db");
+            }
+            // if not in Client DB - add
+            else {
+                Client client = new Client();
+                client.setClientId(human);
+            }
+
+
+        }
     }
 
 }

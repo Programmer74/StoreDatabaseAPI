@@ -65,7 +65,7 @@ public class AddressUserType implements UserType{
         if (rs.wasNull()) return null;
 
         final Address address = new Address();
-        address.setAppartement((Integer) struct.getAttributes()[0]);
+        address.setAppartement((BigDecimal) struct.getAttributes()[0]);
         address.setBuilding((/*Integer*/BigDecimal) struct.getAttributes()[1]);
         address.setStreet((String) struct.getAttributes()[2]);
         address.setCity((String) struct.getAttributes()[3]);

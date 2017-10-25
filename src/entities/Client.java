@@ -6,9 +6,8 @@ import javax.persistence.*;
 @Table(name="CLIENTS")
 public class Client implements java.io.Serializable{
     @Id
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "client_id", referencedColumnName = "people_id",
-                nullable = false, unique = true)
+    //@OneToOne
+    @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "people_id")
     private People clientId;
 
     public Client() { }

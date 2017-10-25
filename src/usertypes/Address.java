@@ -4,7 +4,7 @@ package usertypes;
 import java.math.BigDecimal;
 
 public class Address implements java.io.Serializable{
-    private Integer apartement;
+    private /*Integer*/ BigDecimal apartement;
     private /*Integer*/ BigDecimal building;
     private String street;
     private String city;
@@ -12,7 +12,7 @@ public class Address implements java.io.Serializable{
 
     public Address() { }
 
-    public Address(Integer appartement, /*Integer */ BigDecimal building, String street, String city, String ZipCode){
+    public Address(/*Integer*/ BigDecimal appartement, /*Integer */ BigDecimal building, String street, String city, String ZipCode){
         this.apartement = appartement;
         this.building = building;
         this.street = street;
@@ -21,11 +21,11 @@ public class Address implements java.io.Serializable{
     }
 
 
-    public Integer getAppartement() {
+    public /*Integer */ BigDecimal getAppartement() {
         return apartement;
     }
 
-    public void setAppartement(Integer appartement) {
+    public void setAppartement(/*Integer */ BigDecimal appartement) {
         this.apartement = appartement;
     }
 

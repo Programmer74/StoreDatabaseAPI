@@ -17,12 +17,9 @@
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
 
-        <mapping class="entities.StateHoliday"></mapping>
-        <mapping class="entities.Store"></mapping>
+
         <mapping class="entities.People"></mapping>
         <mapping class="entities.Client"></mapping>
-        <mapping class="entities.Staff"></mapping>
-        <mapping class="entities.Picture"></mapping>
         <!--mapping resource="entities/stateholidays.hbm.xml"></mapping-->
     </session-factory>
 </hibernate-configuration>
