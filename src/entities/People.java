@@ -4,24 +4,17 @@ import usertypes.Address;
 import usertypes.Pname;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/*@org.hibernate.annotations.NamedNativeQueries({
-        @org.hibernate.annotations.NamedNativeQuery(
-                name = "insertIntoClients",
-                query = "CALL insert_into_clients(:pname, :last_name," +
-                        ":middle_name, :mail, :s, :date_birth, :date_regIN," +
-                        ":passwd, :id_num, :paddr, :ph"
-        )
-}) */ // didn't work
 @Entity
 @Table(name = "PEOPLE_TAB")
-public class People {
+public class People implements Serializable{
     @Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_seq")
-    //@SequenceGenerator(name="people_seq", sequenceName = "people_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // works
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_gen")
+    @SequenceGenerator(name="people_gen", sequenceName = "people_seq", allocationSize = 1)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) // works
     @Column(name="people_id")
     private Integer peopleId;
 
@@ -153,8 +146,18 @@ public class People {
 
     @Override
     public String toString() {
-        return (peopleId + ". " + peopleName.toString() + " " +
-            email + " " + dateOfBirth.toString());
+        return "People{" +
+                "peopleId=" + peopleId +
+                ", peopleName=" + peopleName +
+                ", email='" + email + '\'' +
+                ", sex='" + sex + '\'' +
+                ", address=" + address +
+                ", phone=" + phone +
+                ", dateOfBirth=" + dateOfBirth +
+                ", dateRegistered=" + dateRegistered +
+                ", password='" + password + '\'' +
+                ", idNumber=" + idNumber +
+                '}';
     }
 
     @Override

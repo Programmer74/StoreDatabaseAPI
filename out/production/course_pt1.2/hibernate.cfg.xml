@@ -20,7 +20,7 @@
         <mapping class="entities.StateHoliday"></mapping>
         <mapping class="entities.Store"></mapping>
         <mapping class="entities.People"></mapping>
-        <mapping class="entities.Clients"></mapping>
+        <mapping class="entities.Client"></mapping>
         <mapping class="entities.Staff"></mapping>
         <mapping class="entities.Picture"></mapping>
         <!--mapping resource="entities/stateholidays.hbm.xml"></mapping-->

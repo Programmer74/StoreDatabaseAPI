@@ -4,15 +4,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="CLIENTS")
-public class Clients implements java.io.Serializable{
+public class Client implements java.io.Serializable{
     @Id
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id"/*, referencedColumnName = "people_id"*/)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "client_id", referencedColumnName = "people_id",
+                nullable = false, unique = true)
     private People clientId;
 
-    public Clients() { }
+    public Client() { }
 
-    public Clients(People id){
+    public Client(People id){
         this.clientId = id;
     }
 
@@ -24,18 +25,14 @@ public class Clients implements java.io.Serializable{
         this.clientId = clientId;
     }
 
-    public String toString(){
-        return (clientId.toString());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Clients)) return false;
+        if (!(o instanceof Client)) return false;
 
-        Clients clients = (Clients) o;
+        Client client = (Client) o;
 
-        return clientId.equals(clients.clientId);
+        return clientId.equals(client.clientId);
     }
 
     @Override

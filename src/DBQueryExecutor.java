@@ -35,7 +35,7 @@ public class DBQueryExecutor {
                     "maryjen@gmail.com", "f", "12-12-1990",
                     "10-09-2017", "maryjen123", new BigDecimal(132435),
                     0, new BigDecimal(0), null, null, new BigDecimal(4676767)); */
-            options.addHoliday();
+            //options.addHoliday();
             tx.commit();
         } catch (Exception ex){
             ex.printStackTrace();

@@ -1,21 +1,13 @@
-import entities.Clients;
 import entities.People;
 import entities.StateHoliday;
-import entities.Store;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.annotations.NamedNativeQueries;
-import org.hibernate.annotations.NamedNativeQuery;
-import org.hibernate.annotations.NamedQuery;
 import org.hibernate.query.Query;
 import usertypes.Address;
 import usertypes.Pname;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.IllegalFormatException;
 import java.util.Iterator;
 import java.util.List;
 

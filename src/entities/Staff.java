@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name="staff")
 public class Staff implements java.io.Serializable{
     @Id
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "staff_id"/*, referencedColumnName = "people_id"*/)
     private People staff;
 
