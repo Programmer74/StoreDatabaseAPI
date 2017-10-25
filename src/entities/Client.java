@@ -1,27 +1,47 @@
 package entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="CLIENTS")
 public class Client implements java.io.Serializable{
     @Id
-    //@OneToOne
-    @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "people_id")
-    private People clientId;
+    @GeneratedValue(generator = "people_gen")
+    @GenericGenerator(name = "people_gen", strategy = "foreign",
+        parameters =  @org.hibernate.annotations.Parameter(name="property", value = "people"))
+    @Column(name = "client_id", unique = true, nullable = false)
+    private Integer clientId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn(referencedColumnName = "people_id")
+    private People people;
 
     public Client() { }
 
     public Client(People id){
-        this.clientId = id;
+        this.people = id;
     }
 
-    public People getClientId() {
-        return clientId;
+    public People getPeople() {
+        return people;
     }
 
-    public void setClientId(People clientId) {
+    public void setPeople(People clientId) {
+        this.people = clientId;
+    }
+
+    public void setClientId(Integer clientId) {
         this.clientId = clientId;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "clientId=" + clientId +
+                ", people=" + people +
+                '}';
     }
 
     @Override
@@ -31,11 +51,14 @@ public class Client implements java.io.Serializable{
 
         Client client = (Client) o;
 
-        return clientId.equals(client.clientId);
+        if (!clientId.equals(client.clientId)) return false;
+        return people.equals(client.people);
     }
 
     @Override
     public int hashCode() {
-        return clientId.hashCode();
+        int result = clientId.hashCode();
+        result = 31 * result + people.hashCode();
+        return result;
     }
 }

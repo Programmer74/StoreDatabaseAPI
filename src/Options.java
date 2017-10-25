@@ -131,48 +131,26 @@ public class Options {
         session.save(holiday);
     }*/
 
-    public void addCLient(String pname, String lastName, String middleName,
-                          String mail, String s, String dateBirth, String dateRegistered,
-                          String password, BigDecimal idNumber, Integer apt,
-                          BigDecimal building, String street, String city, BigDecimal phone){
+
+
+    public void addCLient(){
+
+        // get user's input
+        People p = new UserDataReader().getPeopleParams();
 
         // check if exists in people
         Query query = session.createQuery("from People where email = :mail");
-        query.setParameter("mail", mail);
+        query.setParameter("mail", p.getEmail());
         List list = query.list();
 
         // if not in People db ==> create one
         if ((list.size() == 0) || (list == null)) {
 
-            // creating address for new client
-            Address address = new Address();
-            address.setAppartement(new BigDecimal(apt));
-            address.setBuilding(building);
-            address.setStreet(street);
-            address.setCity(city);
-
             System.out.println(">> No such object in People DB");
             Date dateB = null, dateReg = null;
 
-            try {
-                dateB = fmt.parse(dateBirth);
-                dateReg = fmt.parse(dateRegistered);
-            } catch (Exception ex) {
-                System.err.println("Couldn't convert to Date");
-            }
-
-            People p = new People();
-            p.setPeopleName(new Pname(pname, lastName, middleName));
-            p.setPhone(phone);
-            p.setEmail(mail);
-            p.setPassword(password);
-            p.setAddress(address);
-            p.setIdNumber(idNumber);
-            p.setDateOfBirth(dateB);
-            p.setDateRegistered(dateReg);
-
             Client cl = new Client();
-            cl.setClientId(p);
+            cl.setPeople(p);
             session.save(cl);
         }
         // already in people DB ==> check in clients DB
@@ -181,18 +159,21 @@ public class Options {
             People human = (People)list.get(0);
 
             Query query1 = session.createQuery("from Client where clientId = :id");
+            query1.setParameter("id", human.getPeopleId());
+            List<Client> list2 = query1.list();
 
-            List list2 = query1
-                    .setParameter("id", human).list();
 
             // if already in Client
-            if ((list2.size() != 0) || (list2 != null)) {
-                System.out.println("already in db");
+            if (!list2.isEmpty()) {
+                System.out.println(">> already in db");
+                for (Object field : list2)
+                    System.out.print(field + " ");
             }
             // if not in Client DB - add
             else {
                 Client client = new Client();
-                client.setClientId(human);
+                client.setPeople(human);
+                session.save(client);
             }
 
 
