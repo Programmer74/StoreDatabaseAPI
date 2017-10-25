@@ -1,8 +1,12 @@
 import entities.People;
+import entities.Picture;
 import entities.Store;
 import usertypes.Address;
 import usertypes.Pname;
 
+import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
+import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -169,4 +173,58 @@ public class UserDataReader {
 
         return address;
     }
+
+    // TODO: validation
+    /**
+     * get user input for inserting the pic
+     * @return created pic, ready to be inserted
+     */
+    public Picture getPictureParams(){
+        final String ASK_PIC_NAME = "* Enter picture NAME";
+        final String ASK_PIC_COMMENT = "* Enter COMMENT for picture";
+
+        String picName = null;
+        String picComment = null;
+
+        sc = new Scanner(System.in);
+
+        System.out.println(ASK_PIC_NAME);
+        picName = sc.nextLine();
+
+        System.out.println(ASK_PIC_COMMENT);
+        picComment = sc.nextLine();
+
+
+        // all images are stored in '/home/helen/my_pics'
+        File file = new File("/home/helen/my_pics/" + picName);
+
+        // check the file mime is image
+        String mimeType = new MimetypesFileTypeMap().getContentType(file);
+        String type = mimeType.split("/")[0];
+        if (!type.equals("image")) {
+            System.err.println("Not of image mime type");
+            return null;
+        }
+
+        byte[] bfile = new byte[(int) file.length()];
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+
+            // converting file into array of bytes
+            fileInputStream.read(bfile);
+            fileInputStream.close();
+        } catch (Exception ex) {
+            System.err.println("Couldn't parse image\n" + ex.getMessage());
+            return null;
+        }
+
+        Picture picture = new Picture();
+        picture.setPicture(bfile);
+        picture.setPicComment(picComment);
+
+        return picture;
+    }
+
+
 }

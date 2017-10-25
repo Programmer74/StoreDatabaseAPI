@@ -36,6 +36,7 @@ public class DBQueryExecutor {
 
             //options.addCLient(); // WORKING
             //options.addStore(); // works
+            options.addPicture();
             tx.commit();
         } catch (Exception ex){
             ex.printStackTrace();

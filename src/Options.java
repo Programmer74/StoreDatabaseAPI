@@ -1,6 +1,7 @@
 import entities.Client;
 import entities.People;
 //import entities.StateHoliday;
+import entities.Picture;
 import entities.Store;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -198,6 +199,15 @@ public class Options {
         Store store = new Store();
         store.setAddress(storeAddress);
         session.save(store);
+    }
+
+    /**
+     * adds pic to database based on it's name (dir is always set to default)
+     */
+    public void addPicture(){
+        Picture pic = new UserDataReader().getPictureParams();
+        if (pic.getPicture().length != 0)
+            session.save(pic);
     }
 
 }
