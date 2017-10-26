@@ -1,22 +1,18 @@
-import entities.People;
-import entities.Picture;
-import entities.Store;
+package entities;
+
 import usertypes.Address;
 import usertypes.Pname;
 
-import javax.activation.MimetypesFileTypeMap;
-import java.io.File;
-import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-/**
- * class that gets data needed from user
- */
 public class UserDataReader {
-    private Scanner sc;
+
+    public final static SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+
+    public UserDataReader() { }
 
     // TODO: add validation
 
@@ -59,7 +55,7 @@ public class UserDataReader {
         Date dateB = null;
         Date dateReg = null;
 
-        sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         System.out.println(ASK_USER_FNAME);
         pname = sc.nextLine();
@@ -117,8 +113,8 @@ public class UserDataReader {
 
         // trying to cast input dates
         try {
-            dateB = Options.fmt.parse(dateBirth);
-            dateReg = Options.fmt.parse(dateRegistered);
+            dateB = fmt.parse(dateBirth);
+            dateReg = fmt.parse(dateRegistered);
         } catch (Exception ex) {
             System.err.println("Error casting dates");
         }
@@ -136,7 +132,6 @@ public class UserDataReader {
         return p;
     }
 
-
     // TODO: validation
     // works
     /**
@@ -152,7 +147,7 @@ public class UserDataReader {
         String street = null;
         String city = null;
 
-        sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         System.out.println(ASK_STORE_BUILDING);
         building = new BigDecimal(sc.nextLine());
@@ -173,58 +168,4 @@ public class UserDataReader {
 
         return address;
     }
-
-    // TODO: validation
-    /**
-     * get user input for inserting the pic
-     * @return created pic, ready to be inserted
-     */
-    public Picture getPictureParams(){
-        final String ASK_PIC_NAME = "* Enter picture NAME";
-        final String ASK_PIC_COMMENT = "* Enter COMMENT for picture";
-
-        String picName = null;
-        String picComment = null;
-
-        sc = new Scanner(System.in);
-
-        System.out.println(ASK_PIC_NAME);
-        picName = sc.nextLine();
-
-        System.out.println(ASK_PIC_COMMENT);
-        picComment = sc.nextLine();
-
-
-        // all images are stored in '/home/helen/my_pics'
-        File file = new File("/home/helen/my_pics/" + picName);
-
-        // check the file mime is image
-        String mimeType = new MimetypesFileTypeMap().getContentType(file);
-        String type = mimeType.split("/")[0];
-        if (!type.equals("image")) {
-            System.err.println("Not of image mime type");
-            return null;
-        }
-
-        byte[] bfile = new byte[(int) file.length()];
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-
-            // converting file into array of bytes
-            fileInputStream.read(bfile);
-            fileInputStream.close();
-        } catch (Exception ex) {
-            System.err.println("Couldn't parse image\n" + ex.getMessage());
-            return null;
-        }
-
-        Picture picture = new Picture();
-        picture.setPicture(bfile);
-        picture.setPicComment(picComment);
-
-        return picture;
-    }
-
-
 }

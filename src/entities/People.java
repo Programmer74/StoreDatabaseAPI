@@ -49,6 +49,11 @@ public class People implements Serializable{
     @Column(name = "id_number", unique = true)
     private BigDecimal idNumber;
 
+
+    public void setPeopleId(Integer peopleId) {
+        this.peopleId = peopleId;
+    }
+
     public People() { }
 
     public People(int peopleId, Address address, BigDecimal phone, Date dateOfBirth,
