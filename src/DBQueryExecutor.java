@@ -11,7 +11,9 @@ import java.util.List;
 public class DBQueryExecutor {
 
     public static void main(String[] args){
-        testPeople();
+        //testPeople(); // TODO: fix
+        //testPicture(); // seems to work
+        testStore();
 
 
         //JDBCExample example = new JDBCExample();
@@ -24,9 +26,26 @@ public class DBQueryExecutor {
         System.out.println("TESTING PEOPLE");
 
         // adding new people
-        System.out.println("New id " + peopleDAO.addPeople());
+        //System.out.println("New id " + peopleDAO.addPeople());
+        peopleDAO.addPeople();
 
         // printing all people
         peopleDAO.listPeople();
+    }
+
+    /**
+     * test for inserting into store
+     */
+    private static void testStore() {
+        StoreDAO storeDAO = new StoreDAO();
+
+        System.out.println("TESTING STORE");
+
+        storeDAO.addStore(); // works
+    }
+
+    private static void testPicture() {
+        PictureDAO pictureDAO = new PictureDAO();
+        pictureDAO.addPicture(); // works
     }
 }

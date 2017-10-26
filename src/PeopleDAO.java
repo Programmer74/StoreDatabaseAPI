@@ -1,20 +1,17 @@
 import entities.People;
 import entities.UserDataReader;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class PeopleDAO {
-    private static SessionFactory sessionFactory;
+    private /*static */ SessionFactory sessionFactory;
 
     public PeopleDAO() {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
@@ -22,16 +19,35 @@ public class PeopleDAO {
     }
 
     public Integer addPeople(){
-        People p = new UserDataReader().getPeopleParams();
-        System.out.println(" >>> " + p);
 
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         Integer newPeopleId = null;
 
         try {
+            People p = new UserDataReader().getPeopleParams();
+            System.out.println(" >>> " + p);
+
             tx = session.beginTransaction();
-            session.save(p);
+
+            People p1 = new People();
+            p1.setPeopleName(p.getPeopleName());
+            p1.setSex(p.getSex());
+            p1.setEmail(p.getEmail());
+            p1.setIdNumber(p.getIdNumber());
+            p1.setDateRegistered(p.getDateRegistered());
+            p1.setPhone(p.getPhone());
+
+            //session.save(p1);
+            session.persist(p1);
+            session.flush();
+            session.clear();
+
+            tx.commit();
+            //session.flush();
+            //session.clear();
+        } catch (StaleStateException ex){
+            System.err.println("token was already used\n" + ex);
             tx.commit();
         } catch (HibernateException ex) {
             if (tx!=null) tx.rollback();

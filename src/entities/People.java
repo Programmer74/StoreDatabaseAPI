@@ -49,11 +49,6 @@ public class People implements Serializable{
     @Column(name = "id_number", unique = true)
     private BigDecimal idNumber;
 
-
-    public void setPeopleId(Integer peopleId) {
-        this.peopleId = peopleId;
-    }
-
     public People() { }
 
     public People(int peopleId, Address address, BigDecimal phone, Date dateOfBirth,
@@ -73,9 +68,9 @@ public class People implements Serializable{
         return peopleId;
     }
 
-    /* public void setPeopleId(int peopleId) {
+     public void setPeopleId(Integer peopleId) {
         this.peopleId = peopleId;
-    } */
+    }
 
     public Pname getPeopleName() {
         return peopleName;
@@ -150,22 +145,6 @@ public class People implements Serializable{
     }
 
     @Override
-    public String toString() {
-        return "People{" +
-                "peopleId=" + peopleId +
-                ", peopleName=" + peopleName +
-                ", email='" + email + '\'' +
-                ", sex='" + sex + '\'' +
-                ", address=" + address +
-                ", phone=" + phone +
-                ", dateOfBirth=" + dateOfBirth +
-                ", dateRegistered=" + dateRegistered +
-                ", password='" + password + '\'' +
-                ", idNumber=" + idNumber +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof People)) return false;
@@ -198,5 +177,21 @@ public class People implements Serializable{
         result = 31 * result + (password != null ? password.hashCode() : 0);
         //result = 31 * result + idNumber;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "People{" +
+                "peopleId=" + peopleId +
+                ", peopleName=" + peopleName +
+                ", email='" + email + '\'' +
+                ", sex='" + sex + '\'' +
+                ", address=" + address +
+                ", phone=" + phone +
+                ", dateOfBirth=" + dateOfBirth +
+                ", dateRegistered=" + dateRegistered +
+                ", password='" + password + '\'' +
+                ", idNumber=" + idNumber +
+                '}';
     }
 }

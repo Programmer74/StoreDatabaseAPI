@@ -3,6 +3,9 @@ package entities;
 import usertypes.Address;
 import usertypes.Pname;
 
+import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
+import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -167,5 +170,63 @@ public class UserDataReader {
         address.setCity(city);
 
         return address;
+    }
+
+    // TODO: validation
+    /**
+     * get user input for inserting the pic
+     * @param name name of the picture we want to insert
+     *             nulll to get it from keyboard
+     * @return created pic, ready to be inserted
+     */
+    public Picture getPictureParams(String name){
+        final String ASK_PIC_NAME = "* Enter picture NAME";
+        final String ASK_PIC_COMMENT = "* Enter COMMENT for picture";
+
+        String picName = name;
+        String picComment = null;
+
+        Scanner sc = new Scanner(System.in);
+
+        // if we already have pic name
+        if ((name == null) || name.equalsIgnoreCase("")) {
+            System.out.println(ASK_PIC_NAME);
+            picName = sc.nextLine();
+
+
+            System.out.println(ASK_PIC_COMMENT);
+            picComment = sc.nextLine();
+        }
+
+
+        // all images are stored in '/home/helen/my_pics'
+        File file = new File("/home/helen/my_pics/" + picName);
+
+        // check the file mime is image
+        String mimeType = new MimetypesFileTypeMap().getContentType(file);
+        /*String type = mimeType.split("/")[0];
+        if (!type.equals("image")) {
+            System.err.println("Not of image mime type");
+            return null;
+        } */
+
+        byte[] bfile = new byte[(int) file.length()];
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+
+            // converting file into array of bytes
+            fileInputStream.read(bfile);
+            fileInputStream.close();
+        } catch (Exception ex) {
+            System.err.println("Couldn't parse image\n" + ex.getMessage());
+            return null;
+        }
+
+        Picture picture = new Picture();
+        picture.setPicture(bfile);
+        picture.setPicComment(picComment);
+
+        return picture;
     }
 }
