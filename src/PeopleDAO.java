@@ -2,7 +2,9 @@ import entities.People;
 import entities.UserDataReader;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
+import usertypes.Pname;
 
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,8 +27,14 @@ public class PeopleDAO {
         Integer newPeopleId = null;
 
         try {
-            People p = new UserDataReader().getPeopleParams();
-            System.out.println(" >>> " + p);
+            //People p = new UserDataReader().getPeopleParams();
+            People test = new People();
+            test.setEmail("test2@gmail.com");
+            test.setPeopleName(new Pname("Irina2", "V", null));
+            test.setPhone(new BigDecimal(123434));
+            test.setIdNumber(new BigDecimal(115765));
+
+            //System.out.println(" >>> " + test);
 
             tx = session.beginTransaction();
 
@@ -40,7 +48,7 @@ public class PeopleDAO {
 
             //session.save(p1);
             session.flush();
-            session.save(p);
+            session.save(test);
             session.flush();
             //session.persist(p1);
             //session.flush();

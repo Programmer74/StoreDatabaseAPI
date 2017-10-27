@@ -11,28 +11,26 @@ import java.util.Date;
 @Entity
 @Table(name = "PEOPLE_TAB")
 public class People implements Serializable{
-    @Id
+    @Id @Column(name="people_id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_gen")
     @SequenceGenerator(name="people_gen", sequenceName = "people_seq", allocationSize = 1)
-    //@GeneratedValue(strategy = GenerationType.IDENTITY) // works
-    @Column(name="people_id")
     private Integer peopleId;
 
-    @Column(name="people_name", columnDefinition="PNAME_T")
+    @Column(name="people_name", columnDefinition="PNAME_T", nullable = false)
     @org.hibernate.annotations.Type(type = "usertypes.PnameUserType")
     private Pname peopleName;
 
-    @Column(name="email")
+    @Column(name="email", length = 50, nullable = false, unique = true)
     private String email;
 
-    @Column(name="sex")
+    @Column(name="sex", length = 50)
     private String sex;
 
     @Column(name="p_address", columnDefinition="ADDRESS")
     @org.hibernate.annotations.Type(type = "usertypes.AddressUserType")
     private Address address;
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private BigDecimal phone;
 
     @Temporal(TemporalType.DATE)
@@ -43,10 +41,10 @@ public class People implements Serializable{
     @Column(name = "date_of_registered")
     private Date dateRegistered;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 50)
     private String password;
 
-    @Column(name = "id_number", unique = true)
+    @Column(name = "id_number", unique = true, nullable = false)
     private BigDecimal idNumber;
 
     public People() { }

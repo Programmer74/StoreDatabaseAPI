@@ -3,11 +3,11 @@ import entities.Client;
 public class DBQueryExecutor {
 
     public static void main(String[] args){
-        //testPeople(); // TODO: fix
+        testPeople(); // TODO: fix
         //testClient();
 
         //testPicture(); // seems to work
-        testStore(); // hopefully works
+        //testStore(); // hopefully works
 
 
         //JDBCExample example = new JDBCExample();
