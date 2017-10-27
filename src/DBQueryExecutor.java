@@ -1,17 +1,11 @@
-//import entities.StateHoliday;
-import entities.People;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
-import java.math.BigDecimal;
-import java.util.Iterator;
-import java.util.List;
+import entities.Client;
 
 public class DBQueryExecutor {
 
     public static void main(String[] args){
         //testPeople(); // TODO: fix
+        //testClient();
+
         //testPicture(); // seems to work
         testStore();
 
@@ -20,6 +14,9 @@ public class DBQueryExecutor {
         //example.init();
     }
 
+    /**
+     * TODO: fix batch Exception
+     */
     private static void testPeople(){
         PeopleDAO peopleDAO = new PeopleDAO();
 
@@ -42,10 +39,16 @@ public class DBQueryExecutor {
         System.out.println("TESTING STORE");
 
         storeDAO.addStore(); // works
+
     }
 
     private static void testPicture() {
         PictureDAO pictureDAO = new PictureDAO();
         pictureDAO.addPicture(); // works
+    }
+
+    private static void testClient(){
+        ClientDAO clientDAO = new ClientDAO();
+        clientDAO.addClient();
     }
 }

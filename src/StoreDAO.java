@@ -26,7 +26,10 @@ public class StoreDAO {
      * procedure for inserting a store in DB
      */
     public void addStore() {
-        Session session = sessionFactory.openSession();
+        Session session = null;
+
+        session = sessionFactory.openSession();
+
         Transaction tx = null;
 
         try {
@@ -46,7 +49,12 @@ public class StoreDAO {
 
             Store store = new Store();
             store.setAddress(storeAddress);
+
+            session.flush();
             session.save(store);
+            session.flush();
+            //session.evict(store);
+            //session.persist(store);
 
             tx.commit();
         } catch (Throwable ex) {

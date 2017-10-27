@@ -18,7 +18,7 @@ public class PeopleDAO {
         }
     }
 
-    public Integer addPeople(){
+    public Integer addPeople() {
 
         Session session = sessionFactory.openSession();
         Transaction tx = null;
@@ -30,29 +30,32 @@ public class PeopleDAO {
 
             tx = session.beginTransaction();
 
-            People p1 = new People();
+            /*People p1 = new People();
             p1.setPeopleName(p.getPeopleName());
             p1.setSex(p.getSex());
             p1.setEmail(p.getEmail());
             p1.setIdNumber(p.getIdNumber());
             p1.setDateRegistered(p.getDateRegistered());
-            p1.setPhone(p.getPhone());
+            p1.setPhone(p.getPhone()); */
 
             //session.save(p1);
-            session.persist(p1);
-            session.flush();
-            session.clear();
+            session.saveOrUpdate(p);
+            //session.persist(p1);
+            //session.flush();
 
             tx.commit();
             //session.flush();
             //session.clear();
-        } catch (StaleStateException ex){
+        /*} catch (StaleStateException ex) {
             System.err.println("token was already used\n" + ex);
-            tx.commit();
-        } catch (HibernateException ex) {
-            if (tx!=null) tx.rollback();
-            ex.printStackTrace();
-        } finally {
+            tx.commit(); */
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        /*} catch (javax.persistence.OptimisticLockException exep){
+            //tx.commit();
+            // TODO: fix this in a normal way */
+        }finally {
             session.close();
         }
         return newPeopleId;

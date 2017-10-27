@@ -20,5 +20,8 @@
 
         <mapping class="entities.People"></mapping>
         <mapping class="entities.Picture"></mapping>
+        <mapping class="entities.Store"></mapping>
+        <mapping class="entities.StateHoliday"></mapping>
+        <mapping class="entities.Client"/>
     </session-factory>
 </hibernate-configuration>

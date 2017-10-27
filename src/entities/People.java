@@ -68,9 +68,9 @@ public class People implements Serializable{
         return peopleId;
     }
 
-     public void setPeopleId(Integer peopleId) {
+    /*public void setPeopleId(Integer peopleId) {
         this.peopleId = peopleId;
-    }
+    } */
 
     public Pname getPeopleName() {
         return peopleName;
