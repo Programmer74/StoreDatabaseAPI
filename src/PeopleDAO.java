@@ -39,7 +39,9 @@ public class PeopleDAO {
             p1.setPhone(p.getPhone()); */
 
             //session.save(p1);
-            session.saveOrUpdate(p);
+            session.flush();
+            session.save(p);
+            session.flush();
             //session.persist(p1);
             //session.flush();
 

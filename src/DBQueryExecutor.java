@@ -7,7 +7,7 @@ public class DBQueryExecutor {
         //testClient();
 
         //testPicture(); // seems to work
-        testStore();
+        testStore(); // hopefully works
 
 
         //JDBCExample example = new JDBCExample();
